@@ -11,10 +11,35 @@
 <body class="home">
   <div class="container">
     <header>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu da Copa">☰</button>
-      <span class="trophy-icon">🏆</span>
-      <h1>Copa do Mundo FIFA</h1>
-      <p class="subtitle">Todas as edições de 1930 a 2022 — Campeões, finais e artilheiros</p>
+      <div class="topbar">
+        <div class="topbar-brand">
+          <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu da Copa">☰</button>
+          <a class="brand" href="index.html">
+            <span class="trophy-icon">🏆</span>
+            <div>
+              <strong>Copa do Mundo</strong>
+              <span>FIFA</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="search-row">
+          <div class="search-wrapper">
+            <input id="search" type="search" placeholder="Buscar por ano, país ou campeão..." aria-label="Buscar edições">
+          </div>
+          <select id="filter" aria-label="Filtrar por período">
+            <option value="all">Todas as edições</option>
+            <option value="pre1950">Antes de 1950</option>
+            <option value="1950-1990">1950 – 1990</option>
+            <option value="1994-2022">1994 – 2022</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hero-row">
+        <h1>Copa do Mundo FIFA</h1>
+        <p class="subtitle">Todas as edições de 1930 a 2022 — Campeões, finais e artilheiros</p>
+      </div>
 
       <div class="flag-strip" aria-label="Bandeiras de países campeões da Copa do Mundo">
         <span>🇧🇷</span>
@@ -28,24 +53,12 @@
         <span>🇲🇽</span>
         <span>🇶🇦</span>
       </div>
-
     </header>
 
     <aside class="site-sidebar" id="mainSidebar" aria-hidden="true">
       <button class="sidebar-close" id="sidebarClose" aria-label="Fechar menu">×</button>
       <div class="sidebar-body">
         <div class="sidebar-brand">Copa do Mundo FIFA</div>
-        <div class="sidebar-search">
-          <div class="search-wrapper">
-            <input id="search" type="search" placeholder="Buscar por ano, país ou campeão..." aria-label="Buscar edições">
-          </div>
-          <select id="filter" aria-label="Filtrar por período">
-            <option value="all">Todas as edições</option>
-            <option value="pre1950">Antes de 1950</option>
-            <option value="1950-1990">1950 – 1990</option>
-            <option value="1994-2022">1994 – 2022</option>
-          </select>
-        </div>
         <nav class="sidebar-links" aria-label="Links rápidos">
           <a href="history.html">História</a>
           <a href="statistics.html">Estatísticas</a>

@@ -87,6 +87,38 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="ed-runner-up">Vice: ${getFlag(ed.runner)} ${ed.runnerPt}</div>
       `;
 
+      // Set a champion color (used by CSS --champ-color for the hover stripe)
+      const championColors = {
+        Brazil: '#009c3b',
+        Argentina: '#74b9ff',
+        Uruguay: '#6fc2e6',
+        Italy: '#0072bc',
+        France: '#002395',
+        England: '#cf142b',
+        Germany: '#000000',
+        'West Germany': '#000000',
+        Spain: '#c60b1e',
+        Netherlands: '#ff7f00',
+        Croatia: '#ff0000',
+        Sweden: '#006aa7',
+        Poland: '#dc143c',
+        Hungary: '#d20000',
+        'Czechoslovakia': '#d7141a',
+        Russia: '#0033a0',
+        Japan: '#bc002d',
+        'South Korea': '#003478',
+        'South Africa': '#008053',
+        Chile: '#d52b1e',
+        Mexico: '#006847',
+        'United States': '#b22234',
+        Switzerland: '#e2001a',
+        Qatar: '#8a1538'
+      };
+
+      const champKey = ed.champion || ed.champPt || '';
+      const champColor = championColors[champKey] || getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim() || '#ff7a18';
+      card.style.setProperty('--champ-color', champColor);
+
       gridContainer.appendChild(card);
     });
   }
