@@ -1,4 +1,11 @@
+/**
+ * theme.js — Flag-based theming for edition pages
+ * Reads the champion from the URL query string and applies
+ * flag-colored gradients to the entire page.
+ */
 (function () {
+  'use strict';
+
   function normalizeSpaces(s) {
     return (s || '').toString().replace(/\s+/g, ' ').trim();
   }
@@ -8,52 +15,88 @@
     return normalizeSpaces(params.get('champion'));
   }
 
-  // Cores aproximadas das bandeiras (fallback quando não existir)
-  // Formato: duas cores principais para degradê e cor do texto.
+  /**
+   * Flag color palettes — 3 colors per flag for rich gradients
+   * a = primary color, b = secondary color, c = tertiary/accent
+   * text = text color that is readable on the gradient
+   */
   const flagThemes = {
-    Brazil: { a: '#009C3B', b: '#FFDF00', text: '#ffffff' },
-    Germany: { a: '#000000', b: '#DD0000', text: '#ffffff' },
-    'West Germany': { a: '#000000', b: '#DD0000', text: '#ffffff' },
-    Italy: { a: '#009246', b: '#FFFFFF', text: '#111111' },
-    Argentina: { a: '#75AADB', b: '#F2F2F2', text: '#111111' },
-    France: { a: '#0055A4', b: '#FFFFFF', text: '#111111' },
-    Uruguay: { a: '#0B4EA2', b: '#FFFFFF', text: '#111111' },
-    Spain: { a: '#AA151B', b: '#F1BF00', text: '#ffffff' },
-    England: { a: '#FFFFFF', b: '#C8102E', text: '#111111' },
-    Croatia: { a: '#D81E05', b: '#FFFFFF', text: '#111111' },
-    Sweden: { a: '#006AA7', b: '#FECC00', text: '#111111' },
-    Netherlands: { a: '#AE1C28', b: '#FFFFFF', text: '#111111' },
-    Hungary: { a: '#CE2939', b: '#FFFFFF', text: '#111111' },
-    Czechoslovakia: { a: '#11457E', b: '#FFFFFF', text: '#ffffff' },
-    Poland: { a: '#FFFFFF', b: '#DC143C', text: '#111111' },
-    Russia: { a: '#FFFFFF', b: '#0039A6', text: '#111111' },
-    Japan: { a: '#FFFFFF', b: '#BC002D', text: '#111111' },
-    'South Korea': { a: '#003478', b: '#D80621', text: '#ffffff' },
-    'South Africa': { a: '#007749', b: '#FFD43B', text: '#111111' },
-    Chile: { a: '#00205B', b: '#FFFFFF', text: '#ffffff' },
-    Mexico: { a: '#006847', b: '#CE1126', text: '#ffffff' },
-    'United States': { a: '#B22234', b: '#3C3B6E', text: '#ffffff' },
-    Switzerland: { a: '#D52B1E', b: '#FFFFFF', text: '#111111' },
-    Qatar: { a: '#8A1538', b: '#F3D100', text: '#111111' },
+    Brazil:           { a: '#009c3b', b: '#ffdf00', c: '#002776', text: '#ffffff' },
+    Germany:          { a: '#000000', b: '#dd0000', c: '#ffcc00', text: '#ffffff' },
+    'West Germany':   { a: '#000000', b: '#dd0000', c: '#ffcc00', text: '#ffffff' },
+    Italy:            { a: '#009246', b: '#ffffff', c: '#ce2b37', text: '#ffffff' },
+    Argentina:        { a: '#75aadb', b: '#ffffff', c: '#f5c400', text: '#1a1a2e' },
+    France:           { a: '#002395', b: '#ffffff', c: '#ed2939', text: '#ffffff' },
+    Uruguay:          { a: '#0038a8', b: '#ffffff', c: '#f5c400', text: '#ffffff' },
+    Spain:            { a: '#aa151b', b: '#f1bf00', c: '#aa151b', text: '#ffffff' },
+    England:          { a: '#ffffff', b: '#c8102e', c: '#012169', text: '#1a1a2e' },
+    Croatia:          { a: '#d81e05', b: '#ffffff', c: '#0033a0', text: '#ffffff' },
+    Sweden:           { a: '#006aa7', b: '#fecc00', c: '#006aa7', text: '#ffffff' },
+    Netherlands:      { a: '#ae1c28', b: '#ffffff', c: '#21468b', text: '#ffffff' },
+    Hungary:          { a: '#ce2939', b: '#ffffff', c: '#477050', text: '#ffffff' },
+    Czechoslovakia:   { a: '#11457e', b: '#ffffff', c: '#d7141a', text: '#ffffff' },
+    Poland:           { a: '#ffffff', b: '#dc143c', c: '#ffffff', text: '#1a1a2e' },
+    Russia:           { a: '#ffffff', b: '#0039a6', c: '#d52b1e', text: '#ffffff' },
+    Japan:            { a: '#ffffff', b: '#bc002d', c: '#ffffff', text: '#1a1a2e' },
+    'South Korea':    { a: '#003478', b: '#ffffff', c: '#d80621', text: '#ffffff' },
+    'South Africa':   { a: '#007749', b: '#ffd43b', c: '#000000', text: '#ffffff' },
+    Chile:            { a: '#00205b', b: '#ffffff', c: '#d7141a', text: '#ffffff' },
+    Mexico:           { a: '#006847', b: '#ffffff', c: '#ce1126', text: '#ffffff' },
+    'United States':  { a: '#b22234', b: '#ffffff', c: '#3c3b6e', text: '#ffffff' },
+    Switzerland:      { a: '#d52b1e', b: '#ffffff', c: '#d52b1e', text: '#ffffff' },
+    Qatar:            { a: '#8a1538', b: '#ffffff', c: '#8a1538', text: '#ffffff' },
+  };
+
+  /**
+   * Country flag emojis
+   */
+  const flagEmojis = {
+    Brazil: '🇧🇷', Germany: '🇩🇪', 'West Germany': '🇩🇪',
+    Italy: '🇮🇹', Argentina: '🇦🇷', France: '🇫🇷',
+    Uruguay: '🇺🇾', Spain: '🇪🇸', England: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    Croatia: '🇭🇷', Sweden: '🇸🇪', Netherlands: '🇳🇱',
+    Hungary: '🇭🇺', Czechoslovakia: '🇨🇿', Poland: '🇵🇱',
+    Russia: '🇷🇺', Japan: '🇯🇵', 'South Korea': '🇰🇷',
+    'South Africa': '🇿🇦', Chile: '🇨🇱', Mexico: '🇲🇽',
+    'United States': '🇺🇸', Switzerland: '🇨🇭', Qatar: '🇶🇦',
   };
 
   function applyTheme(champion) {
+    const theme = flagThemes[champion];
+    if (!theme) return;
+
     const root = document.documentElement;
-    const theme = flagThemes[champion] || { a: '#111111', b: '#dddddd', text: '#eaf2ff' };
 
-    // aplica fundo degradê e acentua bordas/cards
-    root.style.setProperty('--accent2', theme.b);
-    root.style.setProperty('--accent', theme.a);
-    root.style.setProperty('--text', theme.text);
+    // Set CSS custom properties for the flag gradient
+    root.style.setProperty('--flag-a', theme.a + '33');   // ~20% opacity for bg radials
+    root.style.setProperty('--flag-b', theme.b + '28');
+    root.style.setProperty('--flag-c', theme.c + '1a');
+    root.style.setProperty('--flag-text', theme.text);
 
-    // marca como “em cores”
-    root.setAttribute('data-flag-theme', '1');
+    // Override accent colors to match the flag
+    root.style.setProperty('--accent', theme.a === '#ffffff' || theme.a === '#000000' ? theme.b : theme.a);
+    root.style.setProperty('--gold', theme.b === '#ffffff' ? theme.a : theme.b);
+
+    // Add edition-page class for CSS targeting
+    document.body.classList.add('edition-page');
+
+    // Set the flag emoji in the hero if present
+    const flagEl = document.querySelector('.flag-emoji');
+    if (flagEl) {
+      flagEl.textContent = flagEmojis[champion] || '🏆';
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     const champion = getChampionFromQuery();
-    if (!champion) return;
+    if (!champion) {
+      // If no query param, try to extract from the page content
+      const champEl = document.querySelector('[data-champion]');
+      if (champEl) {
+        applyTheme(champEl.dataset.champion);
+      }
+      return;
+    }
     applyTheme(champion);
   });
 })();
-

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quiz da Copa do Mundo FIFA</title>
+  <meta name="description" content="Teste seus conhecimentos sobre a Copa do Mundo FIFA com perguntas rápidas sobre finais e campeões." />
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+</head>
+<body class="edition-page">
+  <main>
+    <div class="edition-hero">
+      <span class="flag-emoji">❓</span>
+      <h1>Quiz da Copa do Mundo FIFA</h1>
+      <p class="host-label">Teste seus conhecimentos sobre finais e campeões</p>
+    </div>
+
+    <div class="edition-summary">
+      <h2>Perguntas rápidas</h2>
+      <div class="quiz-card">
+        <div class="quiz-question">
+          <p>Quem venceu a Copa de 1970?</p>
+          <button>Brasil</button>
+          <button>Itália</button>
+          <button>Alemanha</button>
+        </div>
+        <div class="quiz-question hidden">
+          <p>Qual seleção venceu 5 Copas?</p>
+          <button>Brasil</button>
+          <button>Alemanha</button>
+          <button>Argentina</button>
+        </div>
+        <div class="quiz-question hidden">
+          <p>Em que ano o Brasil venceu a final por 4–1?</p>
+          <button>1970</button>
+          <button>1974</button>
+          <button>1962</button>
+        </div>
+        <div class="quiz-result hidden" id="quizResult"></div>
+      </div>
+      <p>Volte para a página principal se quiser ver mais detalhes sobre as edições e as finais da Copa do Mundo.</p>
+    </div>
+
+    <a href="index.html" class="back-link">Voltar ao índice</a>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizQuestions = Array.from(document.querySelectorAll('.quiz-question'));
+      const quizResult = document.getElementById('quizResult');
+      let quizStep = 0;
+      let quizScore = 0;
+      const answers = ['Brasil', 'Brasil', '1970'];
+
+      function showQuestion(step) {
+        quizQuestions.forEach((question, index) => {
+          question.classList.toggle('hidden', index !== step);
+        });
+      }
+
+      function showResult() {
+        quizQuestions.forEach((question) => question.classList.add('hidden'));
+        quizResult.classList.remove('hidden');
+        quizResult.innerHTML = `<p>Você acertou <strong>${quizScore}</strong> de <strong>${quizQuestions.length}</strong> perguntas.</p><button id="restartQuiz">Recomeçar quiz</button>`;
+        document.getElementById('restartQuiz').addEventListener('click', () => {
+          quizStep = 0;
+          quizScore = 0;
+          quizResult.classList.add('hidden');
+          showQuestion(0);
+        });
+      }
+
+      quizQuestions.forEach((question, index) => {
+        Array.from(question.querySelectorAll('button')).forEach((button) => {
+          button.addEventListener('click', () => {
+            if (button.textContent === answers[index]) quizScore += 1;
+            quizStep += 1;
+            if (quizStep < quizQuestions.length) {
+              showQuestion(quizStep);
+            } else {
+              showResult();
+            }
+          });
+        });
+      });
+
+      showQuestion(0);
+    });
+  </script>
+</body>
+</html>

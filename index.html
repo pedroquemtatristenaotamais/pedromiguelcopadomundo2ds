@@ -1,79 +1,104 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Copa do Mundo — Compilações</title>
-	<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Copa do Mundo FIFA — Todas as Edições</title>
+  <meta name="description" content="Explore todas as edições da Copa do Mundo FIFA, de 1930 a 2022. Campeões, placares, artilheiros e estatísticas de cada final.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
 </head>
-<body>
-	<header>
-		<h1>Copa do Mundo — Todas as edições</h1>
-		<p>Resumo por edição: campeão, vice, placar da final, artilheiro e estatísticas.</p>
-		<div class="controls">
-			<input id="search" type="search" placeholder="Buscar por ano, país ou campeão..." aria-label="Buscar edições">
-			<select id="filter">
-				<option value="all">Todas as edições</option>
-				<option value="pre1950">Antes de 1950</option>
-				<option value="1950-1990">1950–1990</option>
-				<option value="1994-2022">1994–2022</option>
-			</select>
-		</div>
-	</header>
+<body class="home">
+  <div class="container">
+    <header>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu da Copa">☰</button>
+      <span class="trophy-icon">🏆</span>
+      <h1>Copa do Mundo FIFA</h1>
+      <p class="subtitle">Todas as edições de 1930 a 2022 — Campeões, finais e artilheiros</p>
 
-	<main>
-		<section class="editions-list">
-			<h2>Edições</h2>
-			<div id="editions" class="grid">
-				<div class="ed-item"><a href="1930.html">1930 — Uruguai (Campeão: Uruguai, Vice: Argentina)</a></div>
-				<div class="ed-item"><a href="1934.html">1934 — Itália (Campeão: Itália, Vice: Checoslováquia)</a></div>
-				<div class="ed-item"><a href="1938.html">1938 — França (Campeão: Itália, Vice: Hungria)</a></div>
-				<div class="ed-item"><a href="1950.html">1950 — Brasil (Campeão: Uruguai, Vice: Brasil)</a></div>
-				<div class="ed-item"><a href="1954.html">1954 — Suíça (Campeão: Alemanha Ocidental, Vice: Hungria)</a></div>
-				<div class="ed-item"><a href="1958.html">1958 — Suécia (Campeão: Brasil, Vice: Suécia)</a></div>
-				<div class="ed-item"><a href="1962.html">1962 — Chile (Campeão: Brasil, Vice: Checoslováquia)</a></div>
-				<div class="ed-item"><a href="1966.html">1966 — Inglaterra (Campeão: Inglaterra, Vice: Alemanha Ocidental)</a></div>
-				<div class="ed-item"><a href="1970.html">1970 — México (Campeão: Brasil, Vice: Itália)</a></div>
-				<div class="ed-item"><a href="1974.html">1974 — Alemanha Ocidental (Campeão: Alemanha Ocidental, Vice: Holanda)</a></div>
-				<div class="ed-item"><a href="1978.html">1978 — Argentina (Campeão: 🇦🇷 Argentina, Vice: Holanda)</a></div>
-				<div class="ed-item"><a href="1982.html">1982 — Espanha (Campeão: Itália, Vice: Alemanha Ocidental)</a></div>
-				<div class="ed-item"><a href="1986.html">1986 — México (Campeão: 🇦🇷 Argentina, Vice: Alemanha Ocidental)</a></div>
-				<div class="ed-item"><a href="1990.html">1990 — Itália (Campeão: Alemanha Ocidental, Vice: Argentina)</a></div>
-				<div class="ed-item"><a href="1994.html">1994 — Estados Unidos (Campeão: Brasil, Vice: Itália)</a></div>
-				<div class="ed-item"><a href="1998.html">1998 — França (Campeão: França, Vice: Brasil)</a></div>
-				<div class="ed-item"><a href="2002.html">2002 — Coreia do Sul/Japão (Campeão: Brasil, Vice: Alemanha)</a></div>
-				<div class="ed-item"><a href="2006.html">2006 — Alemanha (Campeão: Itália, Vice: França)</a></div>
-				<div class="ed-item"><a href="2010.html">2010 — África do Sul (Campeão: Espanha, Vice: Holanda)</a></div>
-				<div class="ed-item"><a href="2014.html">2014 — Brasil (Campeão: Alemanha, Vice: Argentina)</a></div>
-				<div class="ed-item"><a href="2018.html">2018 — Rússia (Campeão: França, Vice: Croácia)</a></div>
-				<div class="ed-item"><a href="2022.html">2022 — Catar (Campeão: 🇦🇷 Argentina, Vice: França)</a></div>
-			</div>
-		</section>
+      <div class="flag-strip" aria-label="Bandeiras de países campeões da Copa do Mundo">
+        <span>🇧🇷</span>
+        <span>🇦🇷</span>
+        <span>🇮🇹</span>
+        <span>🇫🇷</span>
+        <span>🇺🇾</span>
+        <span>🇩🇪</span>
+        <span>🇬🇧</span>
+        <span>🇪🇸</span>
+        <span>🇲🇽</span>
+        <span>🇶🇦</span>
+      </div>
 
-		<section class="notes">
-			<h2>Observações</h2>
-			<p>Os conteúdos por edição incluem dados iniciais; estatísticas detalhadas serão atualizadas a partir de fontes confiáveis quando solicitado.</p>
-		</section>
-	</main>
+    </header>
 
-	<div id="modal" class="modal hidden" role="dialog" aria-modal="true">
-		<div class="modal-inner">
-			<button id="modal-close" class="modal-close" aria-label="Fechar">×</button>
-			<div id="modal-body"></div>
-		</div>
-	</div>
+    <aside class="site-sidebar" id="mainSidebar" aria-hidden="true">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Fechar menu">×</button>
+      <div class="sidebar-body">
+        <div class="sidebar-brand">Copa do Mundo FIFA</div>
+        <div class="sidebar-search">
+          <div class="search-wrapper">
+            <input id="search" type="search" placeholder="Buscar por ano, país ou campeão..." aria-label="Buscar edições">
+          </div>
+          <select id="filter" aria-label="Filtrar por período">
+            <option value="all">Todas as edições</option>
+            <option value="pre1950">Antes de 1950</option>
+            <option value="1950-1990">1950 – 1990</option>
+            <option value="1994-2022">1994 – 2022</option>
+          </select>
+        </div>
+        <nav class="sidebar-links" aria-label="Links rápidos">
+          <a href="history.html">História</a>
+          <a href="statistics.html">Estatísticas</a>
+          <a href="quiz.html">Quiz</a>
+          <a href="curiosities.html">Curiosidades</a>
+          <a href="finais.html">Finais</a>
+        </nav>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-	<script src="app.js" defer></script>
-	<script>
-	  // marca home para aplicar P&B
-	  document.addEventListener('DOMContentLoaded', ()=>{
-	    document.body.classList.add('home');
-	  });
-	</script>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">22</div>
+        <div class="stat-label">Edições</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Campeões</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">5×</div>
+        <div class="stat-label">Brasil</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">92</div>
+        <div class="stat-label">Anos de história</div>
+      </div>
+    </div>
 
+    <main>
+      <section class="editions-section">
+        <h2>Edições</h2>
+        <div id="editions" class="grid">
+          <!-- Cards gerados dinamicamente pelo app.js -->
+        </div>
+      </section>
 
-	<footer>
-		<p>Gerado automaticamente — peça atualização com fontes online para verificação completa.</p>
-	</footer>
+      <section class="all-games-section" id="all-games">
+        <h2>Finais de todas as Copas</h2>
+        <div class="games-summary">
+          <p>Veja abaixo todas as finais de 1930 a 2022, com placares, estádios e curiosidades sobre cada duelo.</p>
+        </div>
+        <div id="gameCards" class="grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p class="footer-brand">⚽ Copa do Mundo FIFA — Compilações</p>
+      <p>Dados históricos das finais da Copa do Mundo. Clique em cada edição para mais detalhes.</p>
+    </footer>
+  </div>
+
+  <script src="app.js" defer></script>
 </body>
 </html>

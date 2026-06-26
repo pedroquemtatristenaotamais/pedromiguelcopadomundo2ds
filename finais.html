@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Finais da Copa do Mundo FIFA</title>
+  <meta name="description" content="Todas as finais da Copa do Mundo FIFA, com campeões, placares e detalhes dos jogos." />
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+</head>
+<body class="edition-page">
+  <main>
+    <div class="edition-hero">
+      <span class="flag-emoji">🏟️</span>
+      <h1>Finais da Copa do Mundo FIFA</h1>
+      <p class="host-label">Todos os jogos finais de 1930 a 2022</p>
+    </div>
+
+    <div class="edition-summary">
+      <h2>Resumo das finais</h2>
+      <p>Confira cada final da Copa do Mundo FIFA com placares, estádio, cidade e artilheiro da partida.</p>
+      <div class="games-summary">
+        <p>Veja abaixo as 22 finais disputadas, dos clássicos antigos aos confrontos modernos.</p>
+      </div>
+      <div class="game-grid" id="finaisGrid"></div>
+    </div>
+
+    <a href="index.html" class="back-link">Voltar ao índice</a>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const editions = [
+        { year: 1930, champion: 'Uruguai', runner: 'Argentina', score: '4–2', venue: 'Estadio Centenario', city: 'Montevidéu', attendance: '68.346', topScorer: 'Guillermo Stábile (ARG) — 8 gols' },
+        { year: 1934, champion: 'Itália', runner: 'Checoslováquia', score: '2–1 (prorr.)', venue: 'Stadio Nazionale PNF', city: 'Roma', attendance: '55.000', topScorer: 'Oldřich Nejedlý (TCH) — 5 gols' },
+        { year: 1938, champion: 'Itália', runner: 'Hungria', score: '4–2', venue: 'Stade Olympique de Colombes', city: 'Colombes', attendance: '45.000', topScorer: 'Leônidas (BRA) — 7 gols' },
+        { year: 1950, champion: 'Uruguai', runner: 'Brasil', score: '2–1', venue: 'Maracanã', city: 'Rio de Janeiro', attendance: '173.850', topScorer: 'Ademir (BRA) — 8 gols' },
+        { year: 1954, champion: 'Alemanha Ocidental', runner: 'Hungria', score: '3–2', venue: 'Wankdorf Stadium', city: 'Berna', attendance: '62.500', topScorer: 'Sándor Kocsis (HUN) — 11 gols' },
+        { year: 1958, champion: 'Brasil', runner: 'Suécia', score: '5–2', venue: 'Råsunda Stadium', city: 'Solna', attendance: '49.737', topScorer: 'Just Fontaine (FRA) — 13 gols' },
+        { year: 1962, champion: 'Brasil', runner: 'Checoslováquia', score: '3–1', venue: 'Estadio Nacional', city: 'Santiago', attendance: '68.679', topScorer: 'Garrincha (BRA) e outros — 4 gols' },
+        { year: 1966, champion: 'Inglaterra', runner: 'Alemanha Ocidental', score: '4–2 (prorr.)', venue: 'Wembley Stadium', city: 'Londres', attendance: '96.924', topScorer: 'Eusébio (POR) — 9 gols' },
+        { year: 1970, champion: 'Brasil', runner: 'Itália', score: '4–1', venue: 'Estadio Azteca', city: 'Cidade do México', attendance: '107.412', topScorer: 'Gerd Müller (ALE) — 10 gols' },
+        { year: 1974, champion: 'Alemanha Ocidental', runner: 'Holanda', score: '2–1', venue: 'Olympiastadion', city: 'Munique', attendance: '78.200', topScorer: 'Grzegorz Lato (POL) — 7 gols' },
+        { year: 1978, champion: 'Argentina', runner: 'Holanda', score: '3–1 (prorr.)', venue: 'Estadio Monumental', city: 'Buenos Aires', attendance: '71.483', topScorer: 'Mario Kempes (ARG) — 6 gols' },
+        { year: 1982, champion: 'Itália', runner: 'Alemanha Ocidental', score: '3–1', venue: 'Santiago Bernabéu', city: 'Madri', attendance: '90.000', topScorer: 'Paolo Rossi (ITA) — 6 gols' },
+        { year: 1986, champion: 'Argentina', runner: 'Alemanha Ocidental', score: '3–2', venue: 'Estadio Azteca', city: 'Cidade do México', attendance: '114.600', topScorer: 'Gary Lineker (ING) — 6 gols' },
+        { year: 1990, champion: 'Alemanha Ocidental', runner: 'Argentina', score: '1–0', venue: 'Stadio Olimpico', city: 'Roma', attendance: '73.603', topScorer: 'Salvatore Schillaci (ITA) — 6 gols' },
+        { year: 1994, champion: 'Brasil', runner: 'Itália', score: '0–0 (3–2 pên.)', venue: 'Rose Bowl', city: 'Pasadena', attendance: '94.194', topScorer: 'Oleg Salenko (RUS) / Hristo Stoichkov (BUL) — 6 gols' },
+        { year: 1998, champion: 'França', runner: 'Brasil', score: '3–0', venue: 'Stade de France', city: 'Saint-Denis', attendance: '80.000', topScorer: 'Davor Šuker (CRO) — 6 gols' },
+        { year: 2002, champion: 'Brasil', runner: 'Alemanha', score: '2–0', venue: 'International Stadium', city: 'Yokohama', attendance: '69.029', topScorer: 'Ronaldo (BRA) — 8 gols' },
+        { year: 2006, champion: 'Itália', runner: 'França', score: '1–1 (5–3 pên.)', venue: 'Olympiastadion', city: 'Berlim', attendance: '69.000', topScorer: 'Miroslav Klose (ALE) — 5 gols' },
+        { year: 2010, champion: 'Espanha', runner: 'Holanda', score: '1–0 (prorr.)', venue: 'Soccer City', city: 'Joanesburgo', attendance: '84.490', topScorer: 'Thomas Müller (ALE) e outros — 5 gols' },
+        { year: 2014, champion: 'Alemanha', runner: 'Argentina', score: '1–0 (prorr.)', venue: 'Maracanã', city: 'Rio de Janeiro', attendance: '74.738', topScorer: 'James Rodríguez (COL) — 6 gols' },
+        { year: 2018, champion: 'França', runner: 'Croácia', score: '4–2', venue: 'Luzhniki Stadium', city: 'Moscou', attendance: '78.011', topScorer: 'Harry Kane (ING) — 6 gols' },
+        { year: 2022, champion: 'Argentina', runner: 'França', score: '3–3 (4–2 pên.)', venue: 'Lusail Stadium', city: 'Lusail', attendance: '88.966', topScorer: 'Kylian Mbappé (FRA) — 8 gols' }
+      ];
+
+      const flagEmojis = {
+        Brasil: '🇧🇷', Argentina: '🇦🇷', Itália: '🇮🇹', França: '🇫🇷', Alemanha: '🇩🇪', 'Alemanha Ocidental': '🇩🇪', Uruguai: '🇺🇾', Holanda: '🇳🇱', Hungria: '🇭🇺', Suécia: '🇸🇪', Espanha: '🇪🇸', Croácia: '🇭🇷', 'Estados Unidos': '🇺🇸', Japão: '🇯🇵', Catar: '🇶🇦', 'Coreia/Japão': '🇯🇵', México: '🇲🇽', 'África do Sul': '🇿🇦', 'Rússia': '🇷🇺'
+      };
+
+      const grid = document.getElementById('finaisGrid');
+      if (!grid) return;
+      grid.innerHTML = editions.map((ed) => `
+        <article class="game-card">
+          <div class="game-header"><div class="game-year">${ed.year}</div><div class="game-score">${ed.score}</div></div>
+          <div class="game-teams"><span class="team champion">${flagEmojis[ed.champion] || '⚽'} ${ed.champion}</span> vs <span class="team runner">${flagEmojis[ed.runner] || '⚽'} ${ed.runner}</span></div>
+          <div class="game-meta">${ed.venue} · ${ed.city} · Público: ${ed.attendance}</div>
+          <div class="game-topscorer">Artilheiro da final: ${ed.topScorer}</div>
+        </article>
+      `).join('');
+    });
+  </script>
+</body>
+</html>
