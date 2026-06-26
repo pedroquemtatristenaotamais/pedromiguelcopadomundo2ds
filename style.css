@@ -781,25 +781,26 @@ header .subtitle {
 
 /* Colored stripe at bottom of card based on champion */
 .ed-card::after {
-  /* centered small stripe (default: RGB) */
+  /* full-width stripe (inset by card padding) */
   content: '';
   position: absolute;
   bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
+  left: 1.3rem;
+  right: 1.3rem;
   height: 4px;
   border-radius: 4px;
   background: linear-gradient(90deg, rgb(255,0,0), rgb(0,255,0), rgb(0,0,255));
   box-shadow: 0 0 0 rgba(0,0,0,0);
-  transition: background 320ms ease, box-shadow 320ms ease, transform 320ms ease;
+  transition: background 260ms ease, box-shadow 260ms ease, transform 260ms ease;
 }
 
-.ed-card:hover::after {
-  /* on hover, use the champion color provided by JS via --champ-color */
+.ed-card:hover::after,
+.ed-card:focus::after,
+.ed-card:active::after {
+  /* on hover/focus/active, use the champion color provided by JS via --champ-color */
   background: linear-gradient(90deg, var(--champ-color, var(--secondary)), color-mix(in srgb, var(--champ-color, var(--secondary)) 60%, white));
   box-shadow: 0 6px 20px color-mix(in srgb, var(--champ-color, var(--secondary)) 40%, black);
-  transform: translateX(-50%) scaleX(1.06);
+  transform: scaleX(1.01);
 }
 
 /* ═══════════════════════════════════════════════════

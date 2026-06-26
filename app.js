@@ -89,34 +89,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Set a champion color (used by CSS --champ-color for the hover stripe)
       const championColors = {
-        Brazil: '#009c3b',
-        Argentina: '#74b9ff',
-        Uruguay: '#6fc2e6',
-        Italy: '#0072bc',
-        France: '#002395',
-        England: '#cf142b',
-        Germany: '#000000',
-        'West Germany': '#000000',
-        Spain: '#c60b1e',
-        Netherlands: '#ff7f00',
-        Croatia: '#ff0000',
-        Sweden: '#006aa7',
-        Poland: '#dc143c',
-        Hungary: '#d20000',
-        'Czechoslovakia': '#d7141a',
-        Russia: '#0033a0',
-        Japan: '#bc002d',
-        'South Korea': '#003478',
-        'South Africa': '#008053',
-        Chile: '#d52b1e',
-        Mexico: '#006847',
-        'United States': '#b22234',
-        Switzerland: '#e2001a',
-        Qatar: '#8a1538'
+        /* English */
+        Brazil: '#009c3b', Argentina: '#74b9ff', Uruguay: '#6fc2e6', Italy: '#0072bc', France: '#002395',
+        England: '#cf142b', Germany: '#000000', 'West Germany': '#000000', Spain: '#c60b1e', Netherlands: '#ff7f00',
+        Croatia: '#ff0000', Sweden: '#006aa7', Poland: '#dc143c', Hungary: '#d20000', 'Czechoslovakia': '#d7141a',
+        Russia: '#0033a0', Japan: '#bc002d', 'South Korea': '#003478', 'South Africa': '#008053', Chile: '#d52b1e',
+        Mexico: '#006847', 'United States': '#b22234', Switzerland: '#e2001a', Qatar: '#8a1538', Uruguay: '#6fc2e6',
+        /* Portuguese keys (champPt) */
+        Brasil: '#009c3b', Argentina: '#74b9ff', Uruguai: '#6fc2e6', Itália: '#0072bc', França: '#002395',
+        Inglaterra: '#cf142b', Alemanha: '#000000', 'Alemanha Ocidental': '#000000', Espanha: '#c60b1e', Holanda: '#ff7f00',
+        Croácia: '#ff0000', Suécia: '#006aa7', Polônia: '#dc143c', Hungria: '#d20000', 'Checoslováquia': '#d7141a',
+        Rússia: '#0033a0', Japão: '#bc002d', 'Coreia do Sul': '#003478', 'África do Sul': '#008053', Chile: '#d52b1e',
+        México: '#006847', 'Estados Unidos': '#b22234', Suíça: '#e2001a', Catar: '#8a1538'
       };
 
-      const champKey = ed.champion || ed.champPt || '';
-      const champColor = championColors[champKey] || getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim() || '#ff7a18';
+      // Prefer canonical English champion name but fall back to Portuguese champPt
+      const rawKey = (ed.champion || ed.champPt || '').trim();
+      // Try several normalized variants to catch mismatches
+      const variants = [rawKey, rawKey.replace(/\s+\(.*\)$/, ''), rawKey.replace(/\s+de\s+/, ' '), rawKey.toLowerCase()];
+      let champColor = null;
+      for (const k of variants) {
+        if (!k) continue;
+        if (championColors[k]) { champColor = championColors[k]; break; }
+        // try capitalized lookup
+        const cap = k.charAt(0).toUpperCase() + k.slice(1);
+        if (championColors[cap]) { champColor = championColors[cap]; break; }
+      }
+
+      if (!champColor) {
+        // fallback to CSS secondary variable
+        const cssSecondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary').trim();
+        champColor = cssSecondary || '#ff7a18';
+      }
+
       card.style.setProperty('--champ-color', champColor);
 
       gridContainer.appendChild(card);
