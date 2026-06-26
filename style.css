@@ -1,0 +1,135 @@
+:root{
+	--bg: #06070d;
+	--surface: #0a0f1d;
+	--card: rgba(10,15,29,0.72);
+	--accent: #36d7ff;
+	--accent2: #ff2d55;
+	--muted: rgba(220,232,255,0.72);
+	--text: #eaf2ff;
+	--glass: rgba(255,255,255,0.06);
+	--radius: 14px;
+	--ring: rgba(54,215,255,0.35);
+}
+
+/* Home (índice) em preto e branco */
+body.home {
+	filter: grayscale(1) contrast(1.08);
+}
+/* quando a página é “tematizada” por bandeira, desliga P&B */
+body[data-flag-themed="1"]{
+	filter:none !important;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+	margin:0;
+	font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	background:
+		radial-gradient(1200px 600px at 15% -10%, rgba(54,215,255,0.25), transparent 60%),
+		radial-gradient(1000px 500px at 85% 0%, rgba(255,45,85,0.18), transparent 55%),
+		linear-gradient(180deg,#04050a 0%, #071026 65%, #04050a 120%);
+	color:var(--text);
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+}
+/* (substituído no topo para novo fundo dramático) */
+header{
+	max-width:1100px;
+	margin:1.2rem auto 0.6rem;
+	padding:1rem 1.2rem;
+}
+.controls{display:flex;gap:0.6rem;align-items:center;margin-top:0.6rem}
+#search{flex:1;padding:0.6rem 0.8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:var(--glass);color:inherit}
+#filter{padding:0.5rem;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
+main{max-width:1100px;margin:0.4rem auto;padding:1rem}
+.editions-list h2{margin:0 0 0.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.9rem}
+.ed-item{
+	position:relative;
+	background:
+		linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+	padding:0.95rem 1rem;
+	border-radius:var(--radius);
+	box-shadow:
+		0 10px 30px rgba(0,0,0,0.35),
+		0 0 0 1px rgba(255,255,255,0.05) inset;
+	transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+	overflow:hidden;
+}
+.ed-item::before{
+	content:"";
+	position:absolute;
+	inset:-2px;
+	background:
+		conic-gradient(from 180deg, rgba(54,215,255,0.0) 0deg, rgba(54,215,255,0.18) 80deg, rgba(255,45,85,0.14) 160deg, rgba(54,215,255,0.0) 240deg);
+	opacity:0;
+	transition:opacity .18s ease;
+	filter: blur(10px);
+}
+.ed-item::after{
+	content:"";
+	position:absolute;
+	left:-30%;
+	top:-70%;
+	width:140%;
+	height:140%;
+	background: radial-gradient(circle at 30% 40%, rgba(54,215,255,0.12), transparent 55%);
+	opacity:0;
+	transition:opacity .18s ease;
+}
+.ed-item a{color:var(--accent);text-decoration:none;font-weight:750;letter-spacing:0.1px}
+.ed-item:hover{
+	transform:translateY(-7px);
+	box-shadow:
+		0 16px 46px rgba(0,0,0,0.55),
+		0 0 0 1px rgba(54,215,255,0.22) inset;
+}
+.ed-item:hover::before,.ed-item:hover::after{opacity:1}
+.notes{margin-top:1.2rem;color:var(--muted)}
+footer{max-width:1100px;margin:2rem auto;color:var(--muted);font-size:0.9rem;padding:0 1rem}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);backdrop-filter:blur(6px);z-index:60}
+.modal.hidden{display:none}
+.modal-inner{background:linear-gradient(180deg,#071225,#061226);padding:1.2rem;border-radius:14px;max-width:880px;width:95%;box-shadow:0 20px 60px rgba(2,6,23,0.8);border:1px solid rgba(255,255,255,0.03)}
+.modal-close{background:transparent;border:0;color:var(--muted);font-size:1.6rem;position:absolute;right:1.6rem;top:1.2rem}
+#modal-body{margin-top:0.6rem;color:#dbe9fb}
+
+/* Responsive tweaks */
+@media (max-width:600px){
+	.controls{flex-direction:column;align-items:stretch}
+	#search{width:100%}
+}
+.details-btn{margin-left:8px;padding:6px 8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);cursor:pointer;font-weight:600}
+.details-btn:hover{background:rgba(255,255,255,0.02)}
+/* Flags images (CDN) */
+.flag-img{
+	display:inline-block;
+	width:22px;
+	height:16px;
+	border-radius:3px;
+	object-fit:cover;
+	box-shadow:0 0 0 1px rgba(255,255,255,0.06) inset, 0 10px 20px rgba(0,0,0,0.35);
+	transform:translateY(2px);
+}
+
+.flag-stack{display:inline-flex;align-items:center;gap:8px}
+.flag-name{font-weight:650;color:rgba(234,242,255,0.92)}
+
+/* edição/labels */
+edition-card .key{
+	display:inline-block;
+	min-width:140px;
+	color:rgba(220,232,255,0.78);
+}
+
+/* Modal */
+.modal-inner{
+	background:
+		linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+	backdrop-filter: blur(10px);
+	border:1px solid rgba(255,255,255,0.08);
+}
+#modal-body{line-height:1.55}
+
